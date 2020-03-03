@@ -31,23 +31,19 @@ void main() {
     });
 
     test('load() succeeds', () async {
-      expect(
-          await Localization.load(
-            Locale('en'),
-            basePath: "path",
-            assetLoader: JsonAssetLoader(),
-          ),
-          true);
+      await Localization.load(
+        Locale('en'),
+        basePath: "path",
+        assetLoader: JsonAssetLoader(),
+      );
     });
 
     test('load() correctly sets locale path', () async {
-      expect(
-          await Localization.load(
-            Locale('en'),
-            basePath: "path",
-            assetLoader: JsonAssetLoader(),
-          ),
-          true);
+      await Localization.load(
+        Locale('en'),
+        basePath: "path",
+        assetLoader: JsonAssetLoader(),
+      );
 
       expect(Localization.instance.tr("path"), "path/en.json");
     });
