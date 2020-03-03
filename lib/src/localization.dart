@@ -9,8 +9,7 @@ class Localization {
   Translations _translations;
   Locale _locale;
 
-  String path;
-  bool useOnlyLangCode;
+  String basePath;
   final RegExp _replaceArgRegex = RegExp(r'{}');
 
   Localization._();
@@ -19,33 +18,17 @@ class Localization {
   static Localization get instance =>
       _instance ?? (_instance = Localization._());
 
-  static Future<bool> load(
+  static load(
     Locale locale, {
-    String path,
-    bool useOnlyLangCode,
+    String basePath,
     AssetLoader assetLoader,
   }) async {
-    assert(locale != null &&
-        path != null &&
-        useOnlyLangCode != null &&
-        assetLoader != null);
+    assert(locale != null && basePath != null && assetLoader != null);
     instance._locale = locale;
-    instance.path = path;
-    instance.useOnlyLangCode = useOnlyLangCode;
 
-    String localePath = instance.getLocalePath();
+    String localePath = assetLoader.pathResolutionCallback(locale, basePath);
     Map<String, dynamic> data = await assetLoader.load(localePath);
     instance._translations = Translations(data);
-
-    return true;
-  }
-
-  String getLocalePath() {
-    final String _codeLang = _locale.languageCode;
-    final String _codeCoun = _locale.countryCode;
-    final String localePath = '$path/$_codeLang';
-
-    return useOnlyLangCode ? '$localePath.json' : '$localePath-$_codeCoun.json';
   }
 
   String tr(String key, {List<String> args, String gender}) {

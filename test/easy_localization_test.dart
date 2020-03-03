@@ -34,8 +34,7 @@ void main() {
       expect(
           await Localization.load(
             Locale('en'),
-            path: "path",
-            useOnlyLangCode: true,
+            basePath: "path",
             assetLoader: JsonAssetLoader(),
           ),
           true);
@@ -45,44 +44,18 @@ void main() {
       expect(
           await Localization.load(
             Locale('en'),
-            path: "path",
-            useOnlyLangCode: true,
+            basePath: "path",
             assetLoader: JsonAssetLoader(),
           ),
           true);
 
       expect(Localization.instance.tr("path"), "path/en.json");
-    });
-
-    test('load() respects useOnlyLangCode', () async {
-      expect(
-          await Localization.load(
-            Locale('en', 'us'),
-            path: "path",
-            useOnlyLangCode: true,
-            assetLoader: JsonAssetLoader(),
-          ),
-          true);
-
-      expect(Localization.instance.tr("path"), "path/en.json");
-
-      expect(
-          await Localization.load(
-            Locale('en', 'us'),
-            path: "path",
-            useOnlyLangCode: false,
-            assetLoader: JsonAssetLoader(),
-          ),
-          true);
-      expect(Localization.instance.tr("path"), "path/en-us.json");
     });
 
     group('tr', () {
       setUpAll(() async {
         await Localization.load(Locale('en'),
-            path: "path",
-            useOnlyLangCode: true,
-            assetLoader: JsonAssetLoader());
+            basePath: "path", assetLoader: JsonAssetLoader());
       });
       test('finds and returns resource', () {
         expect(Localization.instance.tr("test"), "test");
@@ -167,9 +140,7 @@ void main() {
     group('plural', () {
       setUpAll(() async {
         await Localization.load(Locale('en-US'),
-            path: "path",
-            useOnlyLangCode: true,
-            assetLoader: JsonAssetLoader());
+            basePath: "path", assetLoader: JsonAssetLoader());
       });
 
       test('zero', () {
@@ -206,9 +177,7 @@ void main() {
     group('extensions', () {
       setUpAll(() async {
         await Localization.load(Locale('en'),
-            path: "path",
-            useOnlyLangCode: true,
-            assetLoader: JsonAssetLoader());
+            basePath: "path", assetLoader: JsonAssetLoader());
       });
       group('string', () {
         test('tr', () {

@@ -14,9 +14,7 @@ void main() async {
   runApp(EasyLocalization(
     child: MyApp(),
     supportedLocales: [Locale('en', 'US'), Locale('ar', 'DZ')],
-    fallbackLocale: Locale('en', 'US'),
-    path: 'resources/langs',
-    // useOnlyLangCode: true,
+    basePath: 'resources/langs',
     // optional assetLoader default used is RootBundleAssetLoader which uses flutter's assetloader
     // assetLoader: RootBundleAssetLoader()
     // assetLoader: NetworkAssetLoader()
@@ -37,11 +35,6 @@ class MyApp extends StatelessWidget {
         EasyLocalization.of(context).delegate,
       ],
       supportedLocales: EasyLocalization.of(context).supportedLocales,
-      // locale is either the deviceLocale or the MaterialApp widget locale.
-      // This function is responsible for returning a locale that is supported by your app
-      // if the app is opened for the first time and we only have the deviceLocale information.
-      localeResolutionCallback:
-          EasyLocalization.of(context).localeResolutionCallback,
       locale: EasyLocalization.of(context).locale,
       theme: ThemeData(
         primarySwatch: Colors.blue,
